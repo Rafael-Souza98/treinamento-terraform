@@ -1,6 +1,3 @@
-data "aws_ssm_parameter" "al2_ami" {
-  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-ebs"
-}
 
 data "aws_ami" "latest_amazon_linux_2" {
   most_recent = true
@@ -15,19 +12,32 @@ data "aws_ami" "latest_amazon_linux_2" {
     values = ["amazon"]  # Filtra AMIs cujo proprietário é a Amazon
   }
 }
+data "aws_iam_role" "iam_role_instance" {
+  name = "AmazonSSMRoleForInstancesQuickSetup"
+}
 
 
-resource "aws_instance" "rafael-instance-apache" {
-  vpc_security_group_ids = aws_security_group.rafael-sg-terraform.id
+resource "aws_instance" "instance-apache" {
+  associate_public_ip_address = true
+  subnet_id = aws_subnet.rafael_subnet_pub.id
+  iam_instance_profile = data.aws_iam_role.iam_role_instance.name
+  vpc_security_group_ids = [aws_security_group.sg-terraform.id]
   ami = data.aws_ami.latest_amazon_linux_2.id
   instance_type = var.ec2_type
-  availability_zone = "us-east-1c"
+  
   key_name = aws_key_pair.rafael-terraform-lab.key_name
-  tags = var.my_tags
+  tags = {
+    Name = "${var.prefix}instance-apache"
+  }
 }
 
 resource "aws_key_pair" "rafael-terraform-lab" {
-  key_name_prefix =  "rfa-terraform-"
+ 
+  key_name_prefix =  var.prefix
    public_key = var.key-pair
 }
 
+resource "aws_iam_instance_profile" "this" {
+  name = "${var.prefix}instance-profile"
+  role = var.iam_role_instance
+}

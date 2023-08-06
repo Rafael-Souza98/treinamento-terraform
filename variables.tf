@@ -18,3 +18,11 @@ variable "cidr_pub_subnet" {
 variable "key-pair" {
   type = string
 }
+
+variable "prefix" {
+  type = string
+}
+
+variable "iam_role_instance" {
+  type = string
+}
