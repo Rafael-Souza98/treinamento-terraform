@@ -33,7 +33,9 @@ resource "aws_route_table" "rfa-rtb" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.terraform-igw.id
   }
-  tags = var.my_tags
+  tags = {
+    Name = "${var.prefix}route-table"
+  }
 }
 
 resource "aws_route_table_association" "this" {

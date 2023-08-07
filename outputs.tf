@@ -1,4 +1,5 @@
- output "ami_id" {
+ 
+output "ami_id" {
   value = aws_instance.instance-apache.id
 }
 
@@ -10,3 +11,6 @@ output "private_ip" {
   value = aws_instance.instance-apache.private_ip
 } 
 
+output "iam_profile" {
+  value = aws_iam_instance_profile.this
+}
