@@ -1,16 +1,16 @@
 resource "aws_vpc" "vpc_rafael" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = true
-
+  
   tags = {
     Name = "${var.prefix}vpc_lab"
   } 
 }
 
 resource "aws_subnet" "rafael_subnet_pub" {
- 
+    
     vpc_id = aws_vpc.vpc_rafael.id
-    cidr_block = var.cidr_pub_subnet
+    cidr_block = local.public_subnet_cidr
     map_public_ip_on_launch = true
     tags = {
         Name = "${var.prefix}subnet-pub-lab"
@@ -65,6 +65,6 @@ resource "aws_security_group" "sg-terraform" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = var.my_tags
+  
 }
   

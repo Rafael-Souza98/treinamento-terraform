@@ -1,6 +1,12 @@
 
 variable "vpc_cidr_block" {
   type = string
+  default = "192.168.0.0/16"
+}
+
+variable "ami" {
+  type = string
+  
 }
 
 variable "ec2_type" {
@@ -12,18 +18,15 @@ variable "cidr_pub_subnet" {
   type = string
 }
 
-variable "key-pair" {
-  type = string
-}
-
 variable "prefix" {
   type = string
+  default = "rfa-terraform-"
 }
 
-variable "iam_role_instance" {
-  type = string
-}
+
 variable "mensagem" {
   type = string
   description = "Mensagem de boas vindas"
+  default = "Gerado pelo terraform"
 }
+

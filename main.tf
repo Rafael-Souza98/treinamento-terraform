@@ -12,32 +12,12 @@ data "aws_ami" "latest_amazon_linux_2" {
     values = ["amazon"]  # Filtra AMIs cujo proprietário é a Amazon
   }
 }
-data "aws_iam_role" "iam_role_instance" {
-  name = "AmazonSSMRoleForInstancesQuickSetup"
-}
 
+module "server1" {
+  source = "./server"
+  ami = data.aws_ami.latest_amazon_linux_2
+  cidr_pub_subnet = local.public_subnet_cidr
+  vpc_cidr_block = var.vpc_cidr_block
+  depends_on = [ aws_vpc.vpc_rafael ]
 
-resource "aws_instance" "instance-apache" {
-  associate_public_ip_address = true
-  subnet_id = aws_subnet.rafael_subnet_pub.id
-  iam_instance_profile = aws_iam_instance_profile.this.name
-  vpc_security_group_ids = [aws_security_group.sg-terraform.id]
-  ami = data.aws_ami.latest_amazon_linux_2.id
-  instance_type = var.ec2_type
-  
-  key_name = aws_key_pair.rafael-terraform-lab.key_name
-  tags = {
-    Name = "${var.prefix}instance-apache"
-  }
-}
-
-resource "aws_key_pair" "rafael-terraform-lab" {
- 
-  key_name_prefix =  "rafael-terraform-lab"
-   public_key = var.key-pair
-}
-
-resource "aws_iam_instance_profile" "this" {
-  name = "${var.prefix}instance_profile"
-  role = data.aws_iam_role.iam_role_instance.name
 }

@@ -5,6 +5,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.11.0"
     }
+
+    tls = {
+      source = "hashicorp/tls"
+      version = "4.0.4"
+    }
   }
 
   required_version = ">= 1.5.4"
@@ -12,5 +17,12 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
-
+  default_tags {
+   tags = {
+     Owner =  "rafael"
+     Environment = "dev"
+     ManegedBy = "Terraform"
+   }
+ }
 }
+
