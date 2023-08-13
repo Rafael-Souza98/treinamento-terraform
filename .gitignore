@@ -32,5 +32,5 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
-#Ignore ssh key pair
-rfa-terraform-lab.pem
+
+*.pem
