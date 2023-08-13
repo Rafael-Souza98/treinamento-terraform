@@ -1,5 +1,4 @@
 #!/bin/bash
 yum update -y
-yum install -y httpd
-systemtl enable httpd --now
-echo "${WELCOME_MSG}" > /var/www/html/index.html
+yum install ${PACKAGE_NAME} -y
+systemtl enable ${SERVICE_NAME}--now

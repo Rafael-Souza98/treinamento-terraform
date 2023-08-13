@@ -4,6 +4,10 @@ variable "vpc_cidr_block" {
   default = "192.168.0.0/16"
 }
 
+variable "subnet_id" {
+  type = string
+  
+}
 variable "ami" {
   type = string
   
@@ -30,3 +34,14 @@ variable "mensagem" {
   default = "Gerado pelo terraform"
 }
 
+variable "package_name" {
+  type = string
+}
+
+variable "service_name" {
+  type = string
+}
+
+variable "security_group_ids" {
+  type = set(any)
+}

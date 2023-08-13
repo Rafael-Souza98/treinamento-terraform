@@ -1,17 +1,5 @@
 
-data "aws_ami" "latest_amazon_linux_2" {
-  most_recent = true
 
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]  # Filtra as AMIs com esse padrão no nome
-  }
-
-  filter {
-    name   = "owner-alias"
-    values = ["amazon"]  # Filtra AMIs cujo proprietário é a Amazon
-  }
-}
 
 resource "tls_private_key" "rfa-key-lab" {
   algorithm = "RSA"
@@ -19,11 +7,11 @@ resource "tls_private_key" "rfa-key-lab" {
 
 resource "aws_instance" "instance-apache" {
   associate_public_ip_address = true
-  subnet_id = aws_subnet.rafael_subnet_pub.id
-
-  vpc_security_group_ids = [aws_security_group.sg-terraform.id]
-  ami = data.aws_ami.latest_amazon_linux_2.id
+  subnet_id = var.subnet_id
+  vpc_security_group_ids = var.security_group_ids
+  ami = var.ami
   instance_type = var.ec2_type
+  
   
   key_name = aws_key_pair.rfa-key-pair.key_name
   tags = {
@@ -31,7 +19,8 @@ resource "aws_instance" "instance-apache" {
   }
 
   user_data = templatefile("${path.module}/scripts/user_data.sh", {
-    WELCOME_MSG = var.mensagem
+    PACKAGE_NAME = var.package_name
+    SERVICE_NAME = var.service_name
   })
   user_data_replace_on_change = true
 

@@ -4,7 +4,7 @@ variable "vpc_cidr_block" {
 }
 
 variable "ec2_type" {
-  type = string
+  type    = string
   default = "t2.micro"
 }
 
@@ -12,9 +12,6 @@ variable "cidr_pub_subnet" {
   type = string
 }
 
-variable "key-pair" {
-  type = string
-}
 
 variable "prefix" {
   type = string
@@ -24,6 +21,6 @@ variable "iam_role_instance" {
   type = string
 }
 variable "mensagem" {
-  type = string
+  type        = string
   description = "Mensagem de boas vindas"
 }

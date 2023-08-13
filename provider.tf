@@ -7,7 +7,7 @@ terraform {
     }
 
     tls = {
-      source = "hashicorp/tls"
+      source  = "hashicorp/tls"
       version = "4.0.4"
     }
   }
@@ -16,13 +16,14 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region  = "us-east-1"
+  profile = "rafael-terraform-lab"
   default_tags {
-   tags = {
-     Owner =  "rafael"
-     Environment = "dev"
-     ManegedBy = "Terraform"
-   }
- }
+    tags = {
+      Owner       = "rafael"
+      Environment = "dev"
+      ManegedBy   = "Terraform"
+    }
+  }
 }
 
