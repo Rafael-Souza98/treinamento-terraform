@@ -28,3 +28,4 @@ module "server1" {
   
   depends_on = [aws_vpc.vpc_rafael]
 }
+
