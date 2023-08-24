@@ -10,7 +10,7 @@ resource "aws_vpc" "vpc_rafael" {
 resource "aws_subnet" "rafael_subnet_pub" {
 
   vpc_id                  = aws_vpc.vpc_rafael.id
-  cidr_block              = var.cidr_pub_subnet
+  cidr_block              = cidrsubnet(var.vpc_cidr_block, 8, 0)
   map_public_ip_on_launch = true
   tags = {
     Name = "${var.prefix}subnet-pub-lab"
@@ -46,32 +46,56 @@ resource "aws_route_table_association" "this" {
 
 resource "aws_security_group" "sg-terraform" {
 
-  name   = "${var.prefix}sg"
+  name   = "${var.prefix}sg-web"
   vpc_id = aws_vpc.vpc_rafael.id
-  ingress {
-    description = "Allow ingress protocol TCP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
 
-  }
-  ingress {
-    description = "Allow SSH from Internet"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  dynamic "ingress" {
 
+    for_each = var.ports_ingress
+
+    content {
+      description = "Permitem trafego de entrada na porta ${ingress.value}"
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks  = ["0.0.0.0/0"]
+
+    }
+  }
   egress {
-    description = "Allow egress all"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+      description = "Allow egress all"
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+}
+
+resource "aws_security_group" "sg-terraform-db" {
+
+  name   = "${var.prefix}sg-db"
+  vpc_id = aws_vpc.vpc_rafael.id
+
+  dynamic "ingress" {
+
+    for_each = var.ports_ingress
+
+    content {
+      description = "Permitem trafego de entrada na porta ${ingress.value}"
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks  = ["0.0.0.0/0"]
+
+    }
   }
 
-
+   egress {
+      description = "Allow egress all"
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
 }
   

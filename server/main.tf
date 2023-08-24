@@ -7,6 +7,7 @@ resource "tls_private_key" "rfa-key-lab" {
 
 resource "aws_instance" "instance-apache" {
   associate_public_ip_address = true
+
   subnet_id = var.subnet_id
   vpc_security_group_ids = var.security_group_ids
   ami = var.ami
@@ -15,7 +16,7 @@ resource "aws_instance" "instance-apache" {
   
   key_name = aws_key_pair.rfa-key-pair.key_name
   tags = {
-    Name = "${var.prefix}instance"
+    Name = "${var.instance_name}"
   }
 
   user_data = templatefile("${path.module}/scripts/user_data.sh", {
@@ -41,16 +42,9 @@ resource "aws_instance" "instance-apache" {
   }
 
 resource "aws_key_pair" "rfa-key-pair" {
- 
   key_name_prefix = "${var.prefix}lab"
   public_key = tls_private_key.rfa-key-lab.public_key_openssh
-
   
 }
 
-resource "local_file" "private_key" {
-  content = tls_private_key.rfa-key-lab.private_key_pem
-  filename = "${var.prefix}lab.pem"
-  file_permission = 0400
-}
 

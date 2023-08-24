@@ -26,7 +26,9 @@ variable "prefix" {
   type = string
   default = "rfa-terraform-"
 }
-
+variable "instance_name" {
+  type = string
+}
 
 variable "mensagem" {
   type = string

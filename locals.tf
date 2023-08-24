@@ -1,3 +1,52 @@
+
 locals {
-  public_subnet_cidr = cidrsubnet(var.vpc_cidr_block, 8, 0)
+
+  servidores = {
+    web = {
+      package_name = "httpd"
+      service_name = "httpd"
+    },
+    db = {
+      package_name = "mariadb-server"
+      service_name = "mysqld"
+    }
+  }
+
+  ingress_ports = {
+    web = [
+      {
+        from_port = 80
+        to_port   = 80
+        protocol  = "tcp"
+        source    = "0.0.0.0/0"
+      },
+      {
+        from_port = 22
+        to_port   = 22
+        protocol  = "tcp"
+        source    = "0.0.0.0/0"
+      },
+      {
+        from_port = 443
+        to_port   = 443
+        protocol  = "tcp"
+        source    = "0.0.0.0/0"
+      }
+    ],
+    db = [
+      # mysql
+      {
+        from_port = 3306
+        to_port   = 3306
+        protocol  = "tcp"
+        source    = "0.0.0.0/0"
+      },
+      {
+        from_port = 22
+        to_port   = 22
+        protocol  = "tcp"
+        source    = "0.0.0.0/0"
+      }
+    ]
+  }
 }
