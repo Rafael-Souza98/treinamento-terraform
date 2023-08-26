@@ -1,4 +1,5 @@
 name: "Terraform infrastructure change management pipeline with github actions"
+
 on:
     push:
         branches:
@@ -6,34 +7,34 @@ on:
     pull_request:
         branches:
             - main
+
 env:
     AWS_REGION : "us-east-1"
     AWS_ASSUMED_ROLE : ${{secrets.AWS_ASSUMED_ROLE}}
-#permissoes podem ser configuradas globalmente ou por jobs
+
 permissions:
-    id-token: write #required for requesting JWT
-    contents: write # required for actions/checkout
-    pull-requests: write #required to add comments in pr
+    id-token: write
+    contents: write
+    pull-requests: write
+
 jobs:
     TerraformJob:
-        runs-on: ubuntu-latest #em qual runner/container vai rodar
+        runs-on: ubuntu-latest
         defaults:
             run:
                 working-directory: ./
+        
         steps:
             - name: Checkout repository
               uses: actions/checkout@v2
+              
             - name: Configure AWS credentials
               uses: aws-actions/configure-aws-credentials@v2
               with:
                 role-to-assume: ${{env.AWS_ASSUMED_ROLE}}
                 role-session-name: "terrafom-actions"
-                aws-region: ${{env.AWS_REGION}}      
-            - name: Terraform init
-            id: init
-            run: terraform init
+                aws-region: ${{env.AWS_REGION}}
                     
-
-            
-        
-
+            - name: Terraform init
+              id: init
+              run: terraform init
