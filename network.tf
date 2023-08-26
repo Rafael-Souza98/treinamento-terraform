@@ -58,17 +58,17 @@ resource "aws_security_group" "sg-terraform" {
       from_port   = ingress.value
       to_port     = ingress.value
       protocol    = "tcp"
-      cidr_blocks  = ["0.0.0.0/0"]
+      cidr_blocks = ["0.0.0.0/0"]
 
     }
   }
   egress {
-      description = "Allow egress all"
-      from_port   = 0
-      to_port     = 0
-      protocol    = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
+    description = "Allow egress all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_security_group" "sg-terraform-db" {
@@ -85,17 +85,17 @@ resource "aws_security_group" "sg-terraform-db" {
       from_port   = ingress.value
       to_port     = ingress.value
       protocol    = "tcp"
-      cidr_blocks  = ["0.0.0.0/0"]
+      cidr_blocks = ["0.0.0.0/0"]
 
     }
   }
 
-   egress {
-      description = "Allow egress all"
-      from_port   = 0
-      to_port     = 0
-      protocol    = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
+  egress {
+    description = "Allow egress all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
   
