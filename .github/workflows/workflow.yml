@@ -96,6 +96,7 @@ jobs:
             - name: Terraform plan status
               if: steps.plan.outcome == 'failure'|| steps.validate.outcome == 'failure'|| steps.fmt.outcome == 'failure'
               run: exit 1
+              
             - name: Terraform apply
               if: github.event_name == 'pus'&& github.ref == 'refs/heads/main'
               run: terraform apply --auto-approve
