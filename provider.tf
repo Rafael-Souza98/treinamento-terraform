@@ -14,11 +14,11 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-east-1"
+  region = "us-east-1"
   default_tags {
     tags = {
-      Owner =           "rafael"
-      Environment =      "dev"
+      Owner       = "rafael"
+      Environment = "dev"
       ManegedBy   = "Terraform"
     }
   }

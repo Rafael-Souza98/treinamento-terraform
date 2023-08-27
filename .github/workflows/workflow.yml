@@ -50,7 +50,7 @@ jobs:
 
             - name: Terraform fmt
               id: fmt
-              run: terraform init -check #formata e mostra se esta formatado
+              run: terraform fmt -check #formata e mostra se esta formatado
               continue-on-error: true
 
             - name: Terraform validate

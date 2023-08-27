@@ -87,8 +87,8 @@ resource "aws_db_instance" "db-rafael" {
 }
 
 resource "aws_s3_bucket" "import-bucket-rafael" {
-  bucket = "rafael-import-bucket"
-  force_destroy = false
+  bucket              = "rafael-import-bucket"
+  force_destroy       = false
   object_lock_enabled = false
   tags_all = {
     "Environment" = "dev"
