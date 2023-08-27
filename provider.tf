@@ -18,7 +18,8 @@ provider "aws" {
   profile = "rafael-terraform-lab"
   default_tags {
     tags = {
-      Owner       = "rafael"
+      Owner = 
+      "rafael"
       Environment = "dev"
       ManegedBy   = "Terraform"
     }

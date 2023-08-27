@@ -61,7 +61,7 @@ resource "aws_security_group" "allow_tls" {
     create_before_destroy = true
   }
   tags = {
-    Name = "allow_tls"
+    Name = "${var.prefix}-sg"
   }
 }
 
