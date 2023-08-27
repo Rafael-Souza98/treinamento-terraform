@@ -21,11 +21,11 @@ module "server1" {
   source = "./server"
   ami    = data.aws_ami.latest_amazon_linux_2.image_id
 
-  for_each           = local.servidores
+  for_each   = local.servidores
   instance_name      = "${var.prefix}-${each.key}"
   package_name       = each.value.package_name
   service_name       = each.value.service_name
-  subnet_id          = aws_subnet.rafael_subnet_pub.id
+  subnet_id = aws_subnet.rafael_subnet_pub.id
   cidr_pub_subnet    = cidrsubnet(aws_vpc.vpc_rafael.cidr_block, 8, 0)
   vpc_cidr_block     = aws_vpc.vpc_rafael.cidr_block
   security_group_ids = [aws_security_group.sg-terraform.id]
