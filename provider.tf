@@ -15,7 +15,6 @@ terraform {
 
 provider "aws" {
   region  = "us-east-1"
-  profile = "rafael-terraform-lab"
   default_tags {
     tags = {
       Owner =           "rafael"
