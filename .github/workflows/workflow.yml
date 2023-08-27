@@ -11,6 +11,7 @@ on:
 env:
     AWS_REGION : "us-east-1"
     AWS_ASSUMED_ROLE : ${{secrets.AWS_ASSUMED_ROLE}}
+    ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION : true
 
 permissions:
     id-token: write
@@ -21,6 +22,7 @@ jobs:
     TerraformJob:
         runs-on: ubuntu-latest
         defaults:
+            
             run:
                 working-directory: ./
         
