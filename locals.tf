@@ -9,7 +9,11 @@ locals {
     db = {
       package_name = "mariadb-server"
       service_name = "mysqld"
-    }
+    },
+    web1 = {
+      package_name = "nginx"
+      service_name = "nginx"
+    },
   }
 
   ingress_ports = {
