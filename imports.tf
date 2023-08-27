@@ -5,11 +5,3 @@ import {
 
 
 
-
-import {
-  id = "db-import-terraform"
-  to = aws_db_instance.db-rafael
-
-}
-
-
